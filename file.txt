@@ -1,0 +1,4 @@
+This is another string of content I am writing into file.txt. It is a test script. And it will write. 
+        
+
+        I am trying to see what happens with spaces and newline characters as well. What happens now?

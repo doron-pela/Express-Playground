@@ -1,0 +1,13 @@
+Project structure generated on: Thu, Sep 17, 2026  7:28:06 PM
+Root: /c/Users/doron/Downloads/Server-Side-With-Node
+
+============================================================
+PROJECT TREE
+============================================================
+
+├── .
+├── app.js
+├── file.txt
+├── package.json
+├── package-lock.json
+├── project-structure.txt
