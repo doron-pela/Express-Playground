@@ -1,6 +1,6 @@
-const express = require('express')
-const {readFileSync, writeFileSync} = require('node:fs');
-const _ = require('lodash');
+import express from 'express';
+import {readFileSync, writeFileSync} from 'node:fs';
+import _ from 'lodash';
 const app = express();
 
 const port = 4000;
@@ -14,6 +14,8 @@ app.get('/', (req, res, next)=>{
 });
 
 app.get('/filepipe', (req, res, next)=>{
+    res.status(200);    
+    res.setHeader('Content-Type', 'text/html');
     writeFileSync(
       "./file.txt",
         `This is another string of content I am writing into file.txt. It is a test script. And it will write. 

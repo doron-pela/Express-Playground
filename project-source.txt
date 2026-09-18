@@ -1,12 +1,12 @@
 
 
 ============================================================
-FILE: app.js
+FILE: app.ts
 ============================================================
 
-const express = require('express')
-const {readFileSync, writeFileSync} = require('node:fs');
-const _ = require('lodash');
+import express from 'express';
+import {readFileSync, writeFileSync} from 'node:fs';
+import _ from 'lodash';
 const app = express();
 
 const port = 4000;
@@ -20,6 +20,8 @@ app.get('/', (req, res, next)=>{
 });
 
 app.get('/filepipe', (req, res, next)=>{
+    res.status(200);    
+    res.setHeader('Content-Type', 'text/html');
     writeFileSync(
       "./file.txt",
         `This is another string of content I am writing into file.txt. It is a test script. And it will write. 
@@ -35,6 +37,140 @@ app.get('/filepipe', (req, res, next)=>{
 app.listen(port, host, ()=>{
     console.log(`Server running at http://${host}:${port}/`);
 });
+
+
+============================================================
+FILE: tsconfig.json
+============================================================
+
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+    // File Layout
+    // "rootDir": "./src",
+    // "outDir": "./dist",
+
+    // Environment Settings
+    // See also https://aka.ms/tsconfig/module
+    "module": "nodenext",
+    "target": "esnext",
+    "types": [],
+    // For nodejs:
+    // "lib": ["esnext"],
+    // "types": ["node"],
+    // and npm install -D @types/node
+
+    // Other Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    // Recommended Options
+    "strict": true,
+    "jsx": "react-jsx",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+  }
+}
+
+
+
+============================================================
+FILE: .gitignore
+============================================================
+
+# ==========================================
+# Dependencies
+# ==========================================
+node_modules/
+jspm_packages/
+web_modules/
+
+# ==========================================
+# TypeScript / Build Output
+# ==========================================
+# Blocks the compiled JavaScript output folder (usually 'dist' or 'build')
+dist/
+build/
+out/
+# Blocks TypeScript build cache and incremental compilation files
+*.tsbuildinfo
+
+# ==========================================
+# Environment Variables & Secrets (CRITICAL)
+# ==========================================
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# ==========================================
+# Logs and Runtime Data
+# ==========================================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==========================================
+# Testing & Coverage
+# ==========================================
+coverage/
+.nyc_output/
+.jest/
+
+# ==========================================
+# IDEs and Editors
+# ==========================================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==========================================
+# Operating System Junk
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Icon?
+
+
+
+============================================================
+FILE: README.md
+============================================================
+
+.
+
 
 
 ============================================================
@@ -57,19 +193,31 @@ FILE: package.json
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch app.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc -p tsconfig.json"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "lodash": "^4.17.23",
-    "pg": "^8.23.0"
+    "pg": "^8.23.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/lodash": "^4.17.25",
+    "@types/node": "^26.6.1",
+    "@types/pg": "^8.23.1",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
   }
 }
-
 
 
 ============================================================
