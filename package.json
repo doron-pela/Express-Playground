@@ -4,11 +4,16 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "tsx watch app.ts",
+    "dev": "tsx watch src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "typecheck": "tsc --noEmit",
-    "build": "tsc -p tsconfig.json", 
-    "start": "node dist/app.js"
+    "//": "A comment example for package.json scripts.",
+    "//": "The next line has -p meaning `pointing/using` tsconfig.json, which is the default behavior of tsc, but it's good to be explicit.",
+    "//": "If we want an actual bundle in production when we build, we run build, (perhaps preceeded by the typecheck script for safety's sake), then start (execute the built output in dist/)",
+    "build": "tsc -p tsconfig.json",
+    "//": "but this build step is not necessary for tsx to run the app, as tsx can run TypeScript files directly and we wont need a bundle at all!!",
+    "//": "Alternatively (using esbuild or regular tsc to build), start would be `node dist/app.js (tsc output)`, or node esbuild.config.js (build/bundle config)",
+    "start": "tsx src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +24,7 @@
     "express": "^5.2.1",
     "lodash": "^4.17.23",
     "pg": "^8.23.0",
+    "tsx": "^4.23.13",
     "zod": "^4.6.5"
   },
   "devDependencies": {
@@ -26,7 +32,7 @@
     "@types/lodash": "^4.17.25",
     "@types/node": "^26.6.1",
     "@types/pg": "^8.23.1",
-    "tsx": "^4.23.13",
+    "eslint": "^10.11.0",
     "typescript": "^7.0.2"
   }
 }

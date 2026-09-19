@@ -2,23 +2,35 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": ".",
+    "rootDir": "./src",
     "outDir": "./dist",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
+
+    //These two are the settings that determine how modules are resolved and how they are emitted. 
+    //"module" specifies to typescript, the module system to use when emitting JavaScript code, 
+    // while "moduleResolution" determines how TypeScript resolves module imports during compilation.
+    //Use these two together when using a bundler to like we are (to bridge ts and node runtime): esbuild. 
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
     "target": "esnext",
-    "types": ["node"],
+
     // For nodejs:
     // "lib": ["esnext"],
-    // "types": ["node"],
+    "types": ["node"],
     // and npm install -D @types/node
 
     // Other Outputs
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
+
+    //base
+    "paths": {
+      "@/*": ["./src/*"]
+    },
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
@@ -39,6 +51,6 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
+    "skipLibCheck": true
   }
 }
