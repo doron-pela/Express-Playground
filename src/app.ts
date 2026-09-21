@@ -3,9 +3,10 @@ const app = express();
 import userRouter from "@/routes/user";
 import filepipeRouter from "@/routes/filepipe";
 import indexRouter from "@/routes/index";
+import Pool from "@/config/db" //Import the singleton pool instance
 
 app.use(express.json()); //parses incoming requests with JSON payloads
-app.use(express.urlencoded({ extended: true })); //parses incoming requests with URL-encoded payloads (url encoding is a way to encode data in a URL, often used when submitting html form data)
+app.use(express.urlencoded({ extended: true })); //parses incoming requests with URL-encoded payloads (url encoding is a way to encode data in a URL, often used when submitting html form data e.g empty space -> %20)
 
 app.use("/user", userRouter);
 app.use("/filepipe", filepipeRouter);

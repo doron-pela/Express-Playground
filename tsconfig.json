@@ -8,10 +8,10 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
 
-    //These two are the settings that determine how modules are resolved and how they are emitted. 
-    //"module" specifies to typescript, the module system to use when emitting JavaScript code, 
+    //These two are the settings that determine how modules are resolved and how they are emitted.
+    //"module" specifies to typescript, the module system to use when emitting JavaScript code,
     // while "moduleResolution" determines how TypeScript resolves module imports during compilation.
-    //Use these two together when using a bundler to like we are (to bridge ts and node runtime): esbuild. 
+    //Use these two together when using a bundler to like we are (to bridge ts and node runtime): esbuild.
     "module": "ESNext",
     "moduleResolution": "bundler",
 
@@ -52,5 +52,11 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
-  }
+  },
+  "include": [
+    //The glob pattern (the wildcard * is a placeholder):
+    // Exception: '**/' -> any folders + recursively/
+    //*.ts -> any ''
+    "src/**/*.ts" // Scans full source code.
+  ]
 }
