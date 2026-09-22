@@ -1,21 +1,20 @@
-import type { Request, Response, NextFunction } from 'express';
-import {readFileSync, writeFileSync} from 'node:fs';
-
+import type { NextFunction, Request, Response } from 'express';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const filepipeRouteGetController = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
+    req: Request,
+    res: Response,
+    next: NextFunction,
 ) => {
-    res.status(200);    
+    res.status(200);
     res.setHeader('Content-Type', 'text/html');
     writeFileSync(
-      "./file.txt",
+        './file.txt',
         `This is another string of content I am writing into file.txt. It is a test script. And it will write. 
         \n
-        I am trying to see what happens with spaces and newline characters as well. What happens now?`
+        I am trying to see what happens with spaces and newline characters as well. What happens now?`,
     );
-    const contents = readFileSync("./file.txt", "utf-8");
+    const contents = readFileSync('./file.txt', 'utf-8');
     res.send(`<h1>${contents}</h1>`);
 };
 
