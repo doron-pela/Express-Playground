@@ -1,4 +1,12 @@
 import { Pool } from 'pg';
+import dotenv from "dotenv"
+
+// Safely loads .env.local locally, then defaults to prod's .env in prod 
+// where real cloud variables are used instead.
+
+dotenv.config({
+  path: process.env.NODE_ENV === 'production' ? '.env' : '.env.local'
+});
 
 //This pool should be a singleton: A one-time instance of an object
 export default new Pool({
