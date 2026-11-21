@@ -1,30 +1,45 @@
-import express, {
-    type NextFunction,
-    type Request,
-    type Response,
-} from 'express';
+import express from 'express';
 
-import Pool from '@/config/db';
-import filepipeRouter from '@/routes/filepipe';
-import indexRouter from '@/routes/index';
-import userRouter from '@/routes/user';
+import pool from './config/db.js';
+import { errorHandler } from './middleware/error.middleware.js';
+import filepipeRouter from './modules/filepipe/filepipe.routes.js';
+import homeRouter from './modules/home/home.routes.js';
+import userRouter from './modules/users/user.routes.js';
 
+// Application composition and configuration.
 const app = express();
 
-//Import the singleton pool instance
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.json()); //parses incoming requests with JSON payloads
-app.use(express.urlencoded({ extended: true })); //parses incoming requests with URL-encoded payloads (url encoding is a way to encode data in a URL, often used when submitting html form data e.g empty space -> %20)
-
+// Preserve the exact public URL paths of the original application.
 app.use('/user', userRouter);
 app.use('/filepipe', filepipeRouter);
-app.use('/', indexRouter);
+app.use('/', homeRouter);
 
-const port = 4000;
-const host = '127.0.0.1';
+// Express error handlers must be registered after the routes.
+app.use(errorHandler);
 
-//Returns an instance of the server, rund on localhost by default
-//Listening meaning that the server is configured and ready to accept requests
-app.listen(port, host, () => {
+// Keep app.ts as the executable entry point: package.json remains unchanged.
+const port = Number(process.env.PORT ?? 4000);
+const host = process.env.HOST ?? '127.0.0.1';
+
+const server = app.listen(port, host, () => {
     console.log(`Server running at http://${host}:${port}/`);
 });
+
+// Close the HTTP listener and PostgreSQL pool during a graceful shutdown.
+function shutdown() {
+    server.close(() => {
+        void pool.end().then(() => process.exit(0)).catch((error: unknown) => {
+            console.error('Database shutdown failed:', error);
+            process.exit(1);
+        });
+    });
+}
+
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
+
+export { app };
+export default app;

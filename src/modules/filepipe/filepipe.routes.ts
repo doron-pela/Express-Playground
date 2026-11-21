@@ -1,0 +1,8 @@
+import { Router } from 'express';
+
+import filepipeController from './filepipe.controller.js';
+
+const router = Router();
+router.get('/', filepipeController.getFilepipe);
+
+export default router;
