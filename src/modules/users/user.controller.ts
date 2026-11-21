@@ -21,7 +21,7 @@ async function register(req: Request, res: Response): Promise<void> {
     const result = await userService.register(username, password);
 
     if (!result.ok) {
-        res.status(400).json({ error: 'Password must be at most 72 UTF-8 bytes' });
+        res.status(400).json({ error: `${result.reason}` });
         return;
     }
 
