@@ -12,7 +12,7 @@ export async function seed(connectionString: string) {
         await client.query(`
             CREATE TABLE IF NOT EXISTS usernames (
                 id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-                username VARCHAR(255),
+                username VARCHAR(255) NOT NULL UNIQUE,
                 password VARCHAR(255)
             );
         `);
@@ -26,7 +26,7 @@ export async function seed(connectionString: string) {
         ] as const) {
             const passwordHash = await bcrypt.hash(password, 12);
             await client.query(
-                'INSERT INTO usernames (username, password) VALUES ($1, $2)',
+                'INSERT INTO usernames (username, password) VALUES ($1, $2) ON CONFLICT DO NOTHING',
                 [username, passwordHash],
             );
         }

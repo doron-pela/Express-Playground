@@ -1,12 +1,12 @@
 import type { Request, Response } from 'express';
 
+import { getCsrfToken } from '../../middleware/csrf.middleware.js';
 import userService from './user.service.js';
 import { registerUserSchema } from './user.schema.js';
 import { signupPage } from './user.view.js';
 
-// Express handlers send responses; their return values are not HTTP responses.
-function showSignup(_req: Request, res: Response): void {
-    res.type('html').send(signupPage);
+function showSignup(req: Request, res: Response): void {
+    res.type('html').send(signupPage(getCsrfToken(req)));
 }
 
 async function register(req: Request, res: Response): Promise<void> {
@@ -21,11 +21,16 @@ async function register(req: Request, res: Response): Promise<void> {
     const result = await userService.register(username, password);
 
     if (!result.ok) {
-        res.status(400).json({ error: `${result.reason}` });
+        if (result.reason === 'USERNAME_TAKEN') {
+            res.status(409).json({ error: 'Username already exists' });
+        } else {
+            res.status(400).json({ error: 'Password must be at most 72 UTF-8 bytes' });
+        }
         return;
     }
 
-    // Preserve the original successful response and redirect behavior.
+    // Preserve the original successful HTML response and redirect.
+    // Registration does not automatically log the user in.
     res.type('html').send(`
         <h1>POST request received</h1>
         <p>Redirecting you to the home page shortly...</p>

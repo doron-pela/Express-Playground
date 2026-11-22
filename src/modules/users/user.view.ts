@@ -1,6 +1,6 @@
-// Preserve the original sign-up page exactly as an HTML string.
+// Preserve the original sign-up page, adding only a CSRF hidden field.
 // This remains temporary, framework-independent server-rendered HTML.
-export const signupPage = `<!DOCTYPE html>
+export const signupPage = (csrfToken: string): string => `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -15,6 +15,7 @@ export const signupPage = `<!DOCTYPE html>
     </h1>
     
     <form action="/user" method="POST" style="display: flex; flex-direction: column;">
+      <input type="hidden" name="_csrf" value="${csrfToken}">
       
       <label for="username" style="margin-bottom: 6px; font-size: 14px; font-weight: 600; color: #374151;">
         Username
