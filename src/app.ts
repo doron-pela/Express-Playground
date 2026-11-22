@@ -45,8 +45,8 @@ function shutdown() {
     });
 }
 
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown); //Signal interrupt (Ctrl+C) by user
+process.on('SIGTERM', shutdown); //Signal termination (graceful kill command) by system (docker or kubernetes)
 
 export { app };
 export default app;
