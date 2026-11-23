@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-import filepipeService from './filepipe.service.js';
+import filepipeService from './filepipe.service';
 
 function escapeHtml(value: string): string {
     const entities: Record<string, string> = {

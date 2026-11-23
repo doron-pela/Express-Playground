@@ -1,10 +1,10 @@
 import express from 'express';
 
-import pool from './config/db.js';
-import { errorHandler } from './middleware/error.middleware.js';
-import filepipeRouter from './modules/filepipe/filepipe.routes.js';
-import homeRouter from './modules/home/home.routes.js';
-import userRouter from './modules/users/user.routes.js';
+import pool from '@/config/db';
+import { errorHandler } from '@/middleware/error.middleware';
+import filepipeRouter from '@/modules/filepipe/filepipe.routes';
+import homeRouter from '@/modules/home/home.routes';
+import userRouter from '@/modules/users/user.routes';
 
 // Application composition and configuration.
 const app = express();

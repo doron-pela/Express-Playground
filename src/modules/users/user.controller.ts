@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express';
 
-import userService from './user.service.js';
-import { registerUserSchema } from './user.schema.js';
-import { signupPage } from './user.view.js';
+import userService from './user.service';
+import { registerUserSchema } from './user.schema';
+import { signupPage } from './user.view';
 
 // Express handlers send responses; their return values are not HTTP responses.
 function showSignup(_req: Request, res: Response): void {

@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 
-import userRepository from './user.repository.js';
+import userRepository from './user.repository';
 
 async function register(username: string, password: string) {
     // bcrypt has a 72-BYTE input limit, not a 72-character limit.
